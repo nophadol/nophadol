@@ -1,0 +1,33 @@
+package com.example.example1;
+
+public class GLUtility {
+    public static float[] eyePos = new float[3];
+    public static float[] viewPos = new float[3];
+    public static float[] upVector = new float[3];
+
+    public static void RotateCamera(float[] v_eye, float[] v_view, float pitchDelta, float turnDelta) {
+        float[] originalT2C;
+        float[] normalT2C;
+        float[] cameraVector;
+        float[] normalCameraRight;
+        float[] newPos;
+        float pitchNow, dist;
+        originalT2C = Geometry.VectorSubtract(v_eye, v_view);
+        normalT2C = Geometry.SetVector(originalT2C);
+        dist = Geometry.VectorLength(normalT2C);
+        Geometry.NormalizeVector(normalT2C);
+        normalCameraRight = Geometry.VectorCrossProduct(Geometry.yVector, normalT2C);
+        if (Geometry.VectorLength(normalCameraRight) < 0.001f) {
+            normalCameraRight = Geometry.SetVector(Geometry.xVector);
+        } else Geometry.NormalizeVector(normalCameraRight);
+        pitchNow = (float)Math.acos(Geometry.VectorDotProduct(Geometry.yVector, normalT2C));
+        pitchNow = Geometry.ClampValue(pitchNow+Geometry.DegToRad(pitchDelta), 00+00.025f, (float)Math.PI-00.025f);
+        normalT2C = Geometry.SetVector(Geometry.yVector);
+        normalT2C = Geometry.RotateVector(normalT2C, normalCameraRight, -pitchNow);
+        normalT2C = Geometry.RotateVector(normalT2C, Geometry.yVector, -Geometry.DegToRad(turnDelta));
+        cameraVector = Geometry.SetVector(eyePos);
+        Geometry.ScaleVectorf(normalT2C, dist);
+        newPos = Geometry.VectorAdd(cameraVector, Geometry.VectorSubtract(normalT2C, originalT2C));
+        eyePos = Geometry.SetVector(newPos);
+    }
+}
