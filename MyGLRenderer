@@ -123,8 +123,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
             gl.glMatrixMode(GL10.GL_MODELVIEW);
             GLU.gluLookAt(gl, GLUtility.eyePos[0], GLUtility.eyePos[1], GLUtility.eyePos[2],
                     GLUtility.viewPos[0], GLUtility.viewPos[1], GLUtility.viewPos[2],
-                    0.0f, 1.0f, 0.0f);
-                    gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, ambient, 0);
+                    GLUtility.upVector[0], GLUtility.upVector[1], GLUtility.upVector[2]);
+            gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, ambient, 0);
             gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, diffuse, 0);
             gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, specular, 0);
             gl.glLightf(GL10.GL_LIGHT0, GL10.GL_SHININESS, shininess);
