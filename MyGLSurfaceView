@@ -49,6 +49,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
                 dy = event.getY();
             break;
             case MotionEvent.ACTION_MOVE:
+                setWorldControl(event, prevX, prevY);
                 dx = terrX - prevX;
                 dy = terrY - prevY;
                 float newX = dx * TOUCH_SCALE_FACTOR;
