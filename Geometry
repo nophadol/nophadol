@@ -1,0 +1,234 @@
+package com.example.car_ex2;
+
+// Vector Geometry from my first written in Pascal (all tested in year 1992 in Borland Turbo Pascal 1.0) by Nopphadol Mekiyanon.
+// Full version of all mathematical 3D coordinates, Bone animation and all IK solve to complete animation in my Borland Delphi 4.0 and 7.0
+// But its problem to upload here its have more than 270000 lines for my full version ...
+public class Geometry {
+    // ***** TAffineVector and TVector 4f section.
+    public static float[] zeroVector = {0,0,0,0};
+    public static double[] zeroDblVector = {0,0,0,0};
+    public static float[] xVector = {1,0,0,0};
+    public static float[] yVector = {0,1,0,0};
+    public static float[] zVector = {0,0,1,0};
+    public static float[] xHmgVector = {1,0,0,0};
+    public static float[] yHmgVector = {0,1,0,0};
+    public static float[] zHmgVector = {0,0,1,0};
+    public static float[] wHmgVector = {0,0,0,1};
+    public static short X = 0;
+    public static short Y = 1;
+    public static short Z = 2;
+    public static int LowPoly = 3000;
+    public static float[] ZeroVector() {
+        final int X=0; final int Y=1; final int Z=2; final int W=3;
+        float[] tVector = new float[W+Y];
+        tVector[X] = zeroVector[X];
+        tVector[Y] = zeroVector[Y];
+        tVector[Z] = zeroVector[Z];
+        tVector[W] = zeroVector[W];
+        return tVector;
+    }
+    public static double[] ZeroDblVector() {
+        final int X=0; final int Y=1; final int Z=2; final int W=3;
+        double[] tVector = new double[W+Y];
+        tVector[X] = zeroDblVector[X];
+        tVector[Y] = zeroDblVector[Y];
+        tVector[Z] = zeroDblVector[Z];
+        tVector[W] = zeroDblVector[W];
+        return tVector;
+    }
+    public static float[] ResetVector() {
+        float[] vector = ZeroVector();
+        vector[0] = 0.0f;
+        vector[1] = 0.0f;
+        vector[2] = 0.0f;
+        vector[3] = 1.0f;
+        return vector;
+    }
+    public static double[] ResetDblVector() {
+        double[] vector = ZeroDblVector();
+        vector[0] = 0.0f;
+        vector[1] = 0.0f;
+        vector[2] = 0.0f;
+        vector[3] = 1.0f;
+        return vector;
+    }
+    // Set vector for real type.
+    public static float[] SetVector3f(float vx, float vy, float vz) {
+        float[] tAffineVector = ResetVector();
+        tAffineVector[0] = vx;
+        tAffineVector[1] = vy;
+        tAffineVector[2] = vz;
+        tAffineVector[3] = 1.0f;
+        return tAffineVector;
+    }
+    public static float[] SetVector4f(float vx, float vy, float vz, float vw) {
+        float[] tVector = ResetVector();
+        tVector[0] = vx;
+        tVector[1] = vy;
+        tVector[2] = vz;
+        tVector[3] = vw;
+        return tVector;
+    }
+    // Set vector for double type.
+    public static double[] SetVector4d(double vx, double vy, double vz, double vw) {
+        double[] tVector = ResetDblVector();
+        final int X=0; final int Y=1; final int Z=2; final int W=3;
+        tVector[X] = vx;
+        tVector[Y] = vy;
+        tVector[Z] = vz;
+        tVector[W] = vw;
+        return tVector;
+    }
+    // Set vector for real type.
+    public static float[] SetVector(float[] vr) {
+        float[] vector = SetVector4f(0.0f,0.0f,0.0f,0.0f);
+        vector[0] = vr[0];
+        vector[1] = vr[1];
+        vector[2] = vr[2];
+        vector[3] = 1.0f;
+        return vector;
+    }
+    // Set vector for double type.
+    public static double[] SetDblVector(double[] vr) {
+        double[] tVector = SetVector4d(0.0f,0.0f,0.0f,0.0f);
+        final int X=0; final int Y=1; final int Z=2; final int W=3;
+        tVector[X] = vr[X];
+        tVector[Y] = vr[Y];
+        tVector[Z] = vr[Z];
+        tVector[W] = 1.0f;
+        return tVector;
+    }
+    public static float[] VectorAdd(float[] v1, float[] v2) {
+        float[] vector = SetVector4f(0.0f, 0.0f, 0.0f, 0.0f);
+        vector[0] = v1[0] + v2[0];
+        vector[1] = v1[1] + v2[1];
+        vector[2] = v1[2] + v2[2];
+        vector[3] = 1.0f;
+        return vector;
+    }
+    public static double[] DblVectorAdd(double[] v1, double[] v2) {
+        double[] tVector = SetVector4d(0.0f,0.0f,0.0f,0.0f);
+        final int X=0; final int Y=1; final int Z=2; final int W=3;
+        tVector[X] = v1[X] + v2[X];
+        tVector[Y] = v1[Y] + v2[Y];
+        tVector[Z] = v1[Z] + v2[Z];
+        tVector[W] = 1.0f;
+        return tVector;
+    }
+    public static float[] VectorSubtract(float[] v1, float[] v2) {
+        float[] vector = SetVector4f(0.0f,0.0f,0.0f,0.0f);
+        vector[0] = v1[0] - v2[0];
+        vector[1] = v1[1] - v2[1];
+        vector[2] = v1[2] - v2[2];
+        vector[3] = 1.0f;
+        return vector;
+    }
+    public static double[] DblVectorSubtract(double[] v1, double[] v2) {
+        double[] tVector = SetVector4d(0.0f,0.0f,0.0f,0.0f);
+        final int X=0; final int Y=1; final int Z=2; final int W=3;
+        tVector[X] = v1[X] - v2[X];
+        tVector[Y] = v1[Y] - v2[Y];
+        tVector[Z] = v1[Z] - v2[Z];
+        tVector[W] = 1.0f;
+        return tVector;
+    }
+    public static void ScaleVectorf(float[] v, float factor) {
+        final int X=0; final int Y=1; final int Z=2; final int W=3;
+        v[X] = v[X] * factor;
+        v[Y] = v[Y] * factor;
+        v[Z] = v[Z] * factor;
+        v[W] = 1.0f;
+    }
+    public static float VectorNorm(float[] vr) {
+        float Result;
+        float[] vector = ResetVector();
+        vector[0] = vr[0] * vr[0];
+        vector[1] = vr[1] * vr[1];
+        vector[2] = vr[2] * vr[2];
+        vector[3] = 1.0f;
+        Result = vector[0]+vector[1]+vector[2];
+        return Result;
+    }
+    public static float VectorLength(float[] vr) {
+        return (float)Math.sqrt(Geometry.VectorNorm(vr));
+    }
+    public static float VectorDotProduct(float[] v1, float[] v2) {
+        return v1[0]*v2[0] + v1[1]*v2[1] + v1[2]*v2[2];
+    }
+    public static void NormalizeVector(float[] vr) {
+        float invLen = Geometry.RSqrt(Geometry.VectorNorm(vr));
+        vr[0] = vr[0] * invLen;
+        vr[1] = vr[1] * invLen;
+        vr[2] = vr[2] * invLen;
+        vr[3] = 1.0f;
+    }
+    public static float[] VectorNormalize(float[] vr) {
+        float invLen = Geometry.RSqrt(Geometry.VectorNorm(vr));
+        float[] vector = SetVector4f(0.0f, 0.0f, 0.0f, 0.0f);
+        vector[0] = vr[0] * invLen;
+        vector[1] = vr[1] * invLen;
+        vector[2] = vr[2] * invLen;
+        vector[3] = 1.0f;
+        return vector;
+    }
+    public static float[] VectorCrossProduct(float[] v1, float[] v2) {
+        final int X=0; final int Y=1; final int Z=2; final int W=3;
+        float[] vector = SetVector4f(0.0f, 0.0f, 0.0f, 1.0f);
+        vector[X] = v1[Y]*v2[Z] - v1[Z]*v2[Y];
+        vector[Y] = v1[Z]*v2[X] - v1[X]*v2[Z];
+        vector[Z] = v1[X]*v2[Y] - v1[Y]*v2[X];
+        vector[W] = 1.0f;
+        return vector;
+    }
+    public static float[] Vector3Transform(float[] v, float[][] m) {
+        final int X=0; final int Y=1; final int Z=2; final int W=3;
+        float[] vector = SetVector4f(0.0f, 0.0f, 0.0f, 1.0f);
+        vector[X] = v[X] * m[X][X] + v[Y] * m[Y][X] + v[Z] * m[Z][X];
+        vector[Y] = v[X] * m[X][Y] + v[Y] * m[Y][Y] + v[Z] * m[Z][Y];
+        vector[Z] = v[X] * m[X][Z] + v[Y] * m[Y][Z] + v[Z] * m[Z][Z];
+        vector[W] = v[W];
+        return vector;
+    }
+    public static float[] RotateVector(float[] vector, float[] axis, float angle) {
+        float[][] rotMatrix;
+        float[] v = SetVector(vector);
+        rotMatrix = CreateRotationMatrix(axis, angle);
+        return Vector3Transform(v, rotMatrix);
+    }
+    public static float[][] CreateRotationMatrix(float[] anAxis, float angle) {
+        final int X=0; final int Y=1; final int Z=2; final int W=3;
+        float[][] tMatrix = new float[W+Y][W+Y];
+        float cosine = (float)Math.cos(angle);
+        float sine = (float)Math.sin(angle);
+        float one_minus_cosine = 1 - cosine;
+        float[] axis = Geometry.VectorNormalize(anAxis);
+        tMatrix[X][X] = (one_minus_cosine * Geometry.Sqr(axis[X])) + cosine;
+        tMatrix[X][Y] = (one_minus_cosine * axis[X] * axis[Y]) - (axis[Z] * sine);
+        tMatrix[X][Z] = (one_minus_cosine * axis[Z] * axis[X]) + (axis[Y] * sine);
+        tMatrix[X][W] = 0;
+        tMatrix[Y][X] = (one_minus_cosine * axis[X] * axis[Y]) + (axis[Z] * sine);
+        tMatrix[Y][Y] = (one_minus_cosine * Geometry.Sqr(axis[Y])) + cosine;
+        tMatrix[Y][Z] = (one_minus_cosine * axis[Y] * axis[Z]) - (axis[X] * sine);
+        tMatrix[Y][W] = 0;
+        tMatrix[Z][X] = (one_minus_cosine * axis[Z] * axis[X]) - (axis[Y] * sine);
+        tMatrix[Z][Y] = (one_minus_cosine * axis[Y] * axis[Z]) + (axis[X] * sine);
+        tMatrix[Z][Z] = (one_minus_cosine * Geometry.Sqr(axis[Z])) + cosine;
+        tMatrix[Z][W] = 0;
+        tMatrix[W][X] = 0; tMatrix[W][Y] = 0; tMatrix[W][Z] = 0; tMatrix[W][W] = 1;
+        return tMatrix;
+    }
+    public static float ClampValue(float aValue, float aMin, float aMax) {
+        float av;
+        if (aValue < aMin) {
+            av = aMin;
+        } else if (aValue > aMax) {
+            av = aMax;
+        } else {
+            av = aValue;
+        }
+        return av;
+    }
+    public static float RSqrt(float v) { return 1/(float)Math.sqrt(v); }
+    public static float DegToRad(float degrees) { return degrees * (float)Math.PI / 180; }
+    public static float Sqr(float x) { return x*x; }
+}
