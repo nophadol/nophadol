@@ -39,6 +39,8 @@ public class MyGLSurfaceView extends GLSurfaceView {
     private void setWorldControl(MotionEvent e, float prvX, float prvY) {
         terrX = e.getX();
         terrY = e.getY();
+        dx = terrX - prevX;
+        dy = terrY - prevY;
     }
 
     @Override
