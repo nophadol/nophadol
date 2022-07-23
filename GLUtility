@@ -1,9 +1,9 @@
 package com.example.example1;
 
 public class GLUtility {
-    public static float[] eyePos = new float[3];
-    public static float[] viewPos = new float[3];
-    public static float[] upVector = new float[3];
+    public static float[] eyePos = {0.0f, 0.0f, 5.0f};
+    public static float[] viewPos = {0.0f, 0.0f, 0.0f};
+    public static float[] upVector = {0.0f, 1.0f, 0.0f};
 
     public static void RotateCamera(float[] v_eye, float[] v_view, float pitchDelta, float turnDelta) {
         float[] originalT2C;
