@@ -47,13 +47,10 @@ public class MyGLSurfaceView extends GLSurfaceView {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                dx = event.getX();
-                dy = event.getY();
+                setWorldControl(event, prevX, prevY);
             break;
             case MotionEvent.ACTION_MOVE:
                 setWorldControl(event, prevX, prevY);
-                dx = terrX - prevX;
-                dy = terrY - prevY;
                 float newX = dx * TOUCH_SCALE_FACTOR;
                 float newY = dy * TOUCH_SCALE_FACTOR;
                 GLUtility.RotateCamera(GLUtility.eyePos, GLUtility.viewPos, -newY, -newX);
