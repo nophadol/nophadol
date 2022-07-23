@@ -1,0 +1,63 @@
+package com.example.example1;
+
+import android.content.Context;
+import android.opengl.GLSurfaceView;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+
+public class MyGLSurfaceView extends GLSurfaceView {
+    private final MyGLRenderer renderer;
+
+    /**
+     * Standard View constructor. In order to render something, you
+     * must call {@link #setRenderer} to register a renderer.
+     *
+     * @param context
+     */
+    public MyGLSurfaceView(Context context) {
+        super(context);
+        renderer = new MyGLRenderer(context);
+        setRenderer(renderer);
+    }
+
+    /**
+     * Standard View constructor. In order to render something, you
+     * must call {@link #setRenderer} to register a renderer.
+     *  @param context
+     * @param attrs
+     */
+    public MyGLSurfaceView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        renderer = new MyGLRenderer(context);
+        setRenderer(renderer);
+    }
+
+    // Calculation of steer controller delta angle.
+    private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
+    float dx; float dy; float prevX; float prevY; float terrX; float terrY;
+
+    private void setWorldControl(MotionEvent e, float prvX, float prvY) {
+        terrX = e.getX();
+        terrY = e.getY();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                dx = event.getX();
+                dy = event.getY();
+            break;
+            case MotionEvent.ACTION_MOVE:
+                dx = terrX - prevX;
+                dy = terrY - prevY;
+                float newX = dx * TOUCH_SCALE_FACTOR;
+                float newY = dy * TOUCH_SCALE_FACTOR;
+                GLUtility.RotateCamera(GLUtility.eyePos, GLUtility.viewPos, -newY, -newX);
+            break;
+        }
+        prevX = dx;
+        prevY = dy;
+        return true;
+    }
+}
