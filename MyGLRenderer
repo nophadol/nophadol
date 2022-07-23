@@ -93,6 +93,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         gl.glMatrixMode(GL10.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
+    
+    public static float[] ambient = {0.7499989f, 0.7700019f, 0.7500198f, 1.0f};
+    public static float[] diffuse = {0.9998992f, 0.9880072f, 0.9980917f, 1.0f};
+    public static float[] specular = {0.8999859f, 1.0f, 0.9890017f, 1.0f};
+    public static float shininess = 82.50f;
 
     /**
      * Called to draw the current frame.
@@ -119,6 +124,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
             GLU.gluLookAt(gl, GLUtility.eyePos[0], GLUtility.eyePos[1], GLUtility.eyePos[2],
                     GLUtility.viewPos[0], GLUtility.viewPos[1], GLUtility.viewPos[2],
                     0.0f, 1.0f, 0.0f);
+                    gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, ambient, 0);
+            gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, diffuse, 0);
+            gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, specular, 0);
+            gl.glLightf(GL10.GL_LIGHT0, GL10.GL_SHININESS, shininess);
+            gl.glEnable(GL10.GL_LIGHT0);
+            gl.glColor4f(0.9989f, 0.9999f, 0.9998f, 1.0f);
             shipOne.draw(gl);
         gl.glPopMatrix();
     }
